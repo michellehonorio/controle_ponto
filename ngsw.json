@@ -1,0 +1,87 @@
+{
+  "configVersion": 1,
+  "timestamp": 1788984311248,
+  "index": "/controle_ponto/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/controle_ponto/chunk-B-EYLmnm.js",
+        "/controle_ponto/chunk-D_2nz020.js",
+        "/controle_ponto/chunk-SUrhVpeG.js",
+        "/controle_ponto/chunk-aQiRYb2q.js",
+        "/controle_ponto/chunk-rpxy09xV.js",
+        "/controle_ponto/favicon.ico",
+        "/controle_ponto/index.html",
+        "/controle_ponto/main-ABOFCCSP.js",
+        "/controle_ponto/manifest.webmanifest",
+        "/controle_ponto/styles-KRNMPB3R.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/controle_ponto/icons/icon-128x128.png",
+        "/controle_ponto/icons/icon-144x144.png",
+        "/controle_ponto/icons/icon-152x152.png",
+        "/controle_ponto/icons/icon-192x192.png",
+        "/controle_ponto/icons/icon-384x384.png",
+        "/controle_ponto/icons/icon-512x512.png",
+        "/controle_ponto/icons/icon-72x72.png",
+        "/controle_ponto/icons/icon-96x96.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/controle_ponto/chunk-B-EYLmnm.js": "4eff5e65fc78ecd0bd8a2204437294adf082f47f",
+    "/controle_ponto/chunk-D_2nz020.js": "205470fe77daeebdfc5d4c08b8f713be6cfe3a56",
+    "/controle_ponto/chunk-SUrhVpeG.js": "e14d77395ba46fa49971378839e749abe76f0dee",
+    "/controle_ponto/chunk-aQiRYb2q.js": "95603e09c446a5942820fac190c92850323c2578",
+    "/controle_ponto/chunk-rpxy09xV.js": "2ec7a1eb060d4f518aac43f0ca11536dab38e1e9",
+    "/controle_ponto/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/controle_ponto/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/controle_ponto/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/controle_ponto/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/controle_ponto/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/controle_ponto/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/controle_ponto/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/controle_ponto/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/controle_ponto/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/controle_ponto/index.html": "8d69cbc81196118bedeae9161938dec03c6f81d5",
+    "/controle_ponto/main-ABOFCCSP.js": "fb9fda983b8b8e8a5abb57d4d08c10bc6c9f0f20",
+    "/controle_ponto/manifest.webmanifest": "6edb39210adcf149fbf6586574e0a228c490131e",
+    "/controle_ponto/styles-KRNMPB3R.css": "3a7334b5e96766b23860e6a7ddd8290aa69f039a"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

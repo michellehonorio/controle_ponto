@@ -1,0 +1,1 @@
+import{k as jo}from"./main-ABOFCCSP.js";function o(n){let t=n.replace(/\D/g,``).slice(0,4);return t.length<=2?t:t.slice(0,2)+`:`+t.slice(2)}function l(n){let t=n.replace(/\D/g,``);if(!t)return``;let e=t.padStart(4,`0`).slice(0,4),i=Math.min(23,Number(e.slice(0,2))),s=Math.min(59,Number(e.slice(2)));return jo(i)+`:`+jo(s)}export{o as n,l as t};
