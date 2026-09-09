@@ -1,0 +1,52 @@
+<div class="pagina">
+
+  <header class="topo">
+    <div class="topo__titulo">Histórico</div>
+    <div class="topo__saldo" [class]="'saldo--' + saldoAcumuladoClasse()">
+      Saldo acumulado: {{ saldoAcumuladoLabel() }}
+    </div>
+  </header>
+
+  <div class="conteudo">
+    @if (dias().length === 0) {
+      <div class="vazio">Nenhum registro ainda. Comece na aba "Hoje".</div>
+    }
+
+    @for (dia of dias(); track dia.data) {
+      <div class="cartao">
+        <div class="cartao__cabecalho">
+          <span class="cartao__data">{{ dia.dataCurta }}</span>
+          <span class="chip" [class]="'chip--' + dia.status.replace(' ', '-')">{{ dia.status }}</span>
+        </div>
+
+        @for (p of dia.periodos; track p.titulo) {
+          <div class="linha">
+            <span class="linha__titulo">{{ p.titulo }}</span>
+            <div class="campo">
+              <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
+                     [value]="p.entrada.horario"
+                     (input)="onInput($event)" (blur)="onBlur(dia.data, $index + 1, 'entrada', $event)" />
+              @if (p.entrada.registroId !== undefined) {
+                <button type="button" class="excluir" (click)="excluir(dia.data, p.entrada.registroId)">×</button>
+              }
+            </div>
+            <span class="seta">→</span>
+            <div class="campo">
+              <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
+                     [value]="p.saida.horario"
+                     (input)="onInput($event)" (blur)="onBlur(dia.data, $index + 1, 'saida', $event)" />
+              @if (p.saida.registroId !== undefined) {
+                <button type="button" class="excluir" (click)="excluir(dia.data, p.saida.registroId)">×</button>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="rodape">
+          <span>Computado: {{ dia.tempoComputado }}</span>
+          <span class="saldo-dia" [class]="'saldo--' + dia.saldoClasse">Saldo: {{ dia.saldoLabel }}</span>
+        </div>
+      </div>
+    }
+  </div>
+</div>

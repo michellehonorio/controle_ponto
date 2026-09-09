@@ -1,0 +1,70 @@
+<div class="pagina">
+
+  <header class="topo">
+    <div class="topo__titulo">Controle de Ponto</div>
+    <div class="topo__data">{{ dataHoje() }} · agora {{ horaAgora() }}</div>
+    <span class="topo__status">{{ statusDiaLabel() }}</span>
+  </header>
+
+  <div class="conteudo">
+
+    @for (p of periodos(); track p.titulo; let i = $index) {
+      <div class="cartao">
+        <div class="cartao__cabecalho">
+          {{ p.titulo }}
+          <span class="chip" [style.background]="p.status.bg" [style.color]="p.status.cor">{{ p.status.label }}</span>
+        </div>
+        <div class="linha">
+          <div class="campo">
+            <span class="campo__rotulo">Entrada</span>
+            <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
+                   [value]="p.entrada" [disabled]="ponto.encerradaHoje()"
+                   (input)="onInput($event)" (blur)="onBlur(i + 1, 'entrada', $event)" />
+            <button type="button" class="botao-relogio" title="Marcar agora" [disabled]="!p.entradaHabilitada"
+                    (click)="marcarAgora(i + 1, 'entrada')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"><path d="M12 7v5.2l3.4 2"></path></svg>
+            </button>
+          </div>
+          <div class="campo">
+            <span class="campo__rotulo">Saída</span>
+            <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
+                   [value]="p.saida" [disabled]="ponto.encerradaHoje()"
+                   (input)="onInput($event)" (blur)="onBlur(i + 1, 'saida', $event)" />
+            <button type="button" class="botao-relogio" title="Marcar agora" [disabled]="!p.saidaHabilitada"
+                    (click)="marcarAgora(i + 1, 'saida')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.6" stroke-linecap="round"><path d="M12 7v5.2l3.4 2"></path></svg>
+            </button>
+          </div>
+        </div>
+        @if (p.temLimite) {
+          <div class="limite">Horário limite para retorno: <strong>{{ p.limite }}</strong></div>
+        }
+      </div>
+    }
+
+    <div class="resumo">
+      <div class="resumo__linha">Tempo total de trabalho: {{ total() }}</div>
+      <div class="resumo__linha">Horário previsto para saída: {{ previsto() }}</div>
+      <div class="resumo__progresso">
+        <div class="trilha">
+          <div class="preenchimento" [style.width]="progresso()"></div>
+        </div>
+        <span class="saldo">{{ saldoLabel() }}</span>
+      </div>
+    </div>
+
+    <div class="acoes">
+      <button type="button" class="botao-encerrar" [disabled]="ponto.encerradaHoje()" (click)="encerrar()">{{ rotuloEncerrar() }}</button>
+      @if (ponto.encerradaHoje()) {
+        <div class="mensagem-encerrada">
+          Jornada encerrada às {{ ponto.diaHoje()?.fimReal }} · {{ total() }} trabalhadas<br>
+          <button type="button" class="botao-nova-jornada" (click)="reiniciar()">Nova jornada</button>
+        </div>
+      }
+      @if (ponto.aviso()) {
+        <div class="aviso">{{ ponto.aviso() }}</div>
+      }
+    </div>
+
+  </div>
+</div>

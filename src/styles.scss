@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+:root {
+  /* cor de marca: única cor editável — todas as demais são derivadas dela via color-mix(),
+     igual ao design (mix(base, pct%, white|black) em OKLab). Padrão trocado pra teal. */
+  --cor-primaria: #0f766e;
+  --cor-cartao: color-mix(in oklab, var(--cor-primaria) 11%, white);
+  --cor-pilula: color-mix(in oklab, var(--cor-primaria) 42%, white);
+  --cor-trilha: color-mix(in oklab, var(--cor-primaria) 24%, white);
+  --cor-tinta: color-mix(in oklab, var(--cor-primaria) 82%, black);
+  --cor-chip-curso-bg: color-mix(in oklab, var(--cor-primaria) 26%, white);
+  --cor-chip-curso-texto: color-mix(in oklab, var(--cor-primaria) 78%, black);
+
+  /* estados semânticos: fixos, não seguem a cor de marca (igual ao design original) */
+  --cor-ok-bg: #d8f3e3;
+  --cor-ok-texto: #1c6b45;
+  --cor-vazio-bg: rgba(0, 0, 0, 0.06);
+  --cor-vazio-texto: #5c5c5c;
+  --cor-negativo-bg: #fde3e3;
+  --cor-negativo-texto: #b3261e;
+  --tinta: #111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  color: var(--tinta);
+  font-family: Nunito, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--cor-primaria);
+  &:hover {
+    color: var(--cor-tinta);
+  }
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  display: none;
+}
+input[type='time'] {
+  font-family: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+input::placeholder {
+  color: var(--tinta);
+  opacity: 0.78;
+}
+
+button {
+  font-family: inherit;
+}
+
+@keyframes cp-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

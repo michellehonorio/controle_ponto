@@ -1,0 +1,64 @@
+<div class="pagina">
+
+  <header class="topo">
+    <div class="topo__titulo">Configurações</div>
+  </header>
+
+  <div class="conteudo">
+
+    <section class="cartao">
+      <h2 class="cartao__titulo">Marca</h2>
+      <p class="cartao__texto">Cor usada no app inteiro — as demais tonalidades são geradas a partir dela.</p>
+      <div class="cores">
+        @for (opcao of coresMarca; track opcao.cor) {
+          <button type="button" class="cor-swatch" [style.background]="opcao.cor"
+                  [class.selecionada]="tema.corPrimaria() === opcao.cor"
+                  [attr.aria-label]="opcao.nome" [title]="opcao.nome"
+                  (click)="escolherCor(opcao.cor)"></button>
+        }
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2 class="cartao__titulo">Conta Microsoft / OneDrive</h2>
+      <p class="cartao__texto">
+        A sincronização automática com o OneDrive ainda não está disponível — depende de um
+        cadastro de aplicativo no Azure. Por enquanto, todos os registros ficam salvos
+        apenas neste dispositivo.
+      </p>
+      <button type="button" class="botao-secundario" disabled>Conectar com Microsoft (em breve)</button>
+      <div class="status-linha">
+        <span class="bolinha bolinha--pendente"></span>
+        Sincronização: pendente
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2 class="cartao__titulo">Notificações</h2>
+      <p class="cartao__texto">
+        Alertas de fim de intervalo e de meta da jornada, calculados a partir dos horários
+        que você registra. Só funcionam com o app aberto ou em segundo plano recente —
+        o Android pode atrasar notificações se o app ficar fechado por muito tempo.
+      </p>
+      <button type="button" class="botao-secundario" (click)="pedirNotificacoes()">
+        Ativar notificações
+      </button>
+      <div class="status-linha">
+        <span class="bolinha" [class.bolinha--ok]="notificacoes.permissao() === 'granted'"
+              [class.bolinha--pendente]="notificacoes.permissao() !== 'granted'"></span>
+        Notificações: {{ rotuloPermissao() }}
+      </div>
+    </section>
+
+    <section class="cartao">
+      <h2 class="cartao__titulo">Dados e backup</h2>
+      <p class="cartao__texto">
+        {{ totalDias() }} dia(s) registrado(s) neste dispositivo · saldo acumulado {{ saldoAcumuladoLabel() }}.
+      </p>
+      <button type="button" class="botao-secundario" (click)="exportarBackup()">
+        Exportar backup (.json)
+      </button>
+    </section>
+
+  </div>
+</div>

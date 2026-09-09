@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  box-sizing: border-box;
+  color: #111;
+}
+
+.topo {
+  background: var(--cor-primaria);
+  border-radius: 0 0 26px 26px;
+  padding: 26px 24px;
+  text-align: center;
+}
+
+.topo__titulo {
+  font: 800 27px/1.2 Nunito, sans-serif;
+  color: #fff;
+}
+
+.topo__saldo {
+  margin-top: 8px;
+  font: 700 15px/1.4 Nunito, sans-serif;
+  color: #fff;
+
+  &.saldo--positivo {
+    color: #d8f3e3;
+  }
+  &.saldo--negativo {
+    color: #ffd7d3;
+  }
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 16px 0;
+}
+
+.vazio {
+  text-align: center;
+  font: 600 15px/1.5 Nunito, sans-serif;
+  color: var(--cor-vazio-texto);
+  padding: 32px 0;
+}
+
+.cartao {
+  background: var(--cor-cartao);
+  border-radius: 20px;
+  padding: 14px 16px 16px;
+}
+
+.cartao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.cartao__data {
+  font: 800 17px/1.2 Nunito, sans-serif;
+}
+
+.chip {
+  font: 700 10px/1 Nunito, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.06);
+  color: #5c5c5c;
+
+  &.chip--encerrada {
+    background: var(--cor-ok-bg);
+    color: var(--cor-ok-texto);
+  }
+  &.chip--em-aberto {
+    background: var(--cor-chip-curso-bg);
+    color: var(--cor-tinta);
+  }
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  flex-wrap: wrap;
+}
+
+.linha__titulo {
+  font: 600 13px/1 Nunito, sans-serif;
+  color: #5c5c5c;
+  min-width: 74px;
+}
+
+.campo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.campo input {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 16px;
+  padding: 6px 10px;
+  font: 600 15px/1 Nunito, sans-serif;
+  color: #111;
+  width: 62px;
+  text-align: center;
+}
+
+.excluir {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.1);
+  color: #5c5c5c;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.18);
+  }
+}
+
+.seta {
+  color: #999;
+  font-size: 13px;
+}
+
+.rodape {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  font: 700 13px/1 Nunito, sans-serif;
+}
+
+.saldo-dia.saldo--positivo {
+  color: var(--cor-ok-texto);
+}
+.saldo-dia.saldo--negativo {
+  color: var(--cor-negativo-texto);
+}

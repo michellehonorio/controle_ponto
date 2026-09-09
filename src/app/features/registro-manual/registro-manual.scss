@@ -1,0 +1,123 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  box-sizing: border-box;
+  color: #111;
+}
+
+.topo {
+  background: var(--cor-primaria);
+  border-radius: 0 0 26px 26px;
+  padding: 26px 24px;
+  text-align: center;
+}
+
+.topo__titulo {
+  font: 800 27px/1.2 Nunito, sans-serif;
+  color: #fff;
+}
+
+.topo__subtitulo {
+  margin-top: 6px;
+  font: 600 13px/1.4 Nunito, sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 20px 0;
+}
+
+.campo-grupo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rotulo {
+  font: 700 13px/1 Nunito, sans-serif;
+  color: #5c5c5c;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.input-data {
+  background: var(--cor-cartao);
+  border: none;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font: 600 16px/1 Nunito, sans-serif;
+  color: #111;
+}
+
+.segmentado {
+  display: flex;
+  gap: 8px;
+
+  button {
+    flex: 1;
+    background: var(--cor-cartao);
+    border: none;
+    border-radius: 16px;
+    padding: 12px 0;
+    font: 700 15px/1 Nunito, sans-serif;
+    color: #111;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &.ativo {
+      background: var(--cor-primaria);
+      color: #fff;
+    }
+  }
+}
+
+.input-horario {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 20px;
+  padding: 16px;
+  font: 800 28px/1 Nunito, sans-serif;
+  color: #111;
+  text-align: center;
+}
+
+.botao-salvar {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 26px;
+  padding: 16px 34px;
+  font: 800 20px/1 Nunito, sans-serif;
+  color: #111;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.confirmacao {
+  animation: cp-in 0.3s ease both;
+  text-align: center;
+  font: 600 14px/1.5 Nunito, sans-serif;
+  color: var(--cor-tinta);
+  background: var(--cor-cartao);
+  border-radius: 14px;
+  padding: 12px 14px;
+}

@@ -1,0 +1,45 @@
+<div class="pagina">
+
+  <header class="topo">
+    <div class="topo__titulo">Registro manual</div>
+    <div class="topo__subtitulo">Esqueceu de bater o ponto? Lance ou corrija aqui.</div>
+  </header>
+
+  <div class="conteudo">
+
+    <div class="campo-grupo">
+      <label class="rotulo" for="data-input">Data</label>
+      <input id="data-input" type="date" class="input-data" [max]="maxData()"
+             [value]="data()" (change)="data.set($any($event.target).value)" />
+    </div>
+
+    <div class="campo-grupo">
+      <span class="rotulo">Período</span>
+      <div class="segmentado">
+        @for (s of [1, 2, 3]; track s) {
+          <button type="button" [class.ativo]="sequencia() === s" (click)="selecionarSequencia($any(s))">{{ s }}º</button>
+        }
+      </div>
+    </div>
+
+    <div class="campo-grupo">
+      <span class="rotulo">Tipo</span>
+      <div class="segmentado">
+        <button type="button" [class.ativo]="tipo() === 'entrada'" (click)="selecionarTipo('entrada')">Entrada</button>
+        <button type="button" [class.ativo]="tipo() === 'saida'" (click)="selecionarTipo('saida')">Saída</button>
+      </div>
+    </div>
+
+    <div class="campo-grupo">
+      <label class="rotulo" for="horario-input">Horário</label>
+      <input id="horario-input" type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
+             class="input-horario" [value]="horario()" (input)="onInput($event)" />
+    </div>
+
+    <button type="button" class="botao-salvar" [disabled]="horario().length < 4" (click)="salvar()">Salvar registro</button>
+
+    @if (confirmacao()) {
+      <div class="confirmacao">{{ confirmacao() }}</div>
+    }
+  </div>
+</div>

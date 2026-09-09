@@ -1,0 +1,237 @@
+:host {
+  display: block;
+}
+
+.pagina {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0 0 40px;
+  box-sizing: border-box;
+  color: #111;
+}
+
+.topo {
+  background: var(--cor-primaria);
+  border-radius: 0 0 26px 26px;
+  padding: 26px 24px;
+  text-align: center;
+  position: relative;
+}
+
+.topo__titulo {
+  font: 800 27px/1.2 Nunito, sans-serif;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+
+.topo__data {
+  font: 600 13px/1.4 Nunito, sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 6px;
+}
+
+.topo__status {
+  display: inline-block;
+  margin-top: 10px;
+  font: 700 10px/1 Nunito, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 16px 0;
+}
+
+.cartao {
+  background: var(--cor-cartao);
+  border-radius: 22px;
+  padding: 16px 18px 18px;
+}
+
+.cartao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: 600 19px/1.2 Nunito, sans-serif;
+  color: #111;
+  margin-bottom: 14px;
+}
+
+.chip {
+  font: 700 10px/1 Nunito, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 7px;
+  border-radius: 20px;
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.campo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.campo__rotulo {
+  font: 400 17px/1 Nunito, sans-serif;
+}
+
+.campo input {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font: 600 19px/1 Nunito, sans-serif;
+  color: #111;
+  width: 82px;
+  text-align: center;
+  box-sizing: content-box;
+
+  &:disabled {
+    opacity: 0.7;
+  }
+}
+
+.botao-relogio {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid #111;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex: none;
+  transition: background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+}
+
+.limite {
+  font: 400 16px/1.4 Nunito, sans-serif;
+  color: #111;
+  margin-top: 14px;
+
+  strong {
+    font-weight: 700;
+  }
+}
+
+.resumo {
+  background: var(--cor-cartao);
+  border-radius: 22px;
+  padding: 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.resumo__linha {
+  font: 800 21px/1.25 Nunito, sans-serif;
+}
+
+.resumo__progresso {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.trilha {
+  flex: 1;
+  height: 9px;
+  border-radius: 9px;
+  background: var(--cor-trilha);
+  overflow: hidden;
+}
+
+.preenchimento {
+  height: 100%;
+  background: var(--cor-primaria);
+  border-radius: 9px;
+  transition: width 0.4s ease;
+}
+
+.saldo {
+  font: 700 13px/1 Nunito, sans-serif;
+  color: var(--cor-tinta);
+  white-space: nowrap;
+}
+
+.acoes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 0;
+}
+
+.botao-encerrar {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 26px;
+  padding: 16px 34px;
+  font: 800 20px/1 Nunito, sans-serif;
+  color: #111;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.05);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  &:disabled {
+    cursor: default;
+    opacity: 0.75;
+  }
+}
+
+.mensagem-encerrada {
+  animation: cp-in 0.3s ease both;
+  text-align: center;
+  font: 600 14px/1.5 Nunito, sans-serif;
+  color: var(--cor-tinta);
+}
+
+.botao-nova-jornada {
+  margin-top: 8px;
+  background: transparent;
+  border: 2px solid var(--cor-pilula);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font: 700 13px/1 Nunito, sans-serif;
+  color: var(--cor-tinta);
+  cursor: pointer;
+}
+
+.aviso {
+  animation: cp-in 0.3s ease both;
+  font: 600 14px/1.4 Nunito, sans-serif;
+  color: var(--cor-tinta);
+  text-align: center;
+}
