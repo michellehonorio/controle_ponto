@@ -1,5 +1,5 @@
 import { Periodo } from '../models';
-import { CREDITO_INTERVALO_MIN, META_COMPUTADO_MIN, TOLERANCIA_MIN } from '../constants';
+import { INTERVALO_MIN_MIN, META_COMPUTADO_MIN, TOLERANCIA_MIN } from '../constants';
 
 export const pad = (n: number) => String(Math.trunc(n)).padStart(2, '0');
 
@@ -47,12 +47,10 @@ export interface ResultadoCalculo {
   /** índice (0-based) do período aberto (entrada sem saída), ou -1 se nenhum. */
   abertaIdx: number;
   statusDia: StatusDia;
-  /** tempo trabalhado bruto (sem crédito de intervalo), em minutos. */
+  /** tempo trabalhado bruto (sem o intervalo), em minutos. */
   tempoTrabalhadoMin: number;
-  /** tempo trabalhado + crédito do intervalo (o que conta pra meta), em minutos. */
+  /** tempo trabalhado + intervalo mínimo obrigatório fixo (o que conta pra meta), em minutos. */
   tempoComputadoMin: number;
-  /** crédito de intervalo já apurado (0 até a 2ª entrada ser registrada). */
-  creditoIntervaloMin: number;
   /** duração real do intervalo obrigatório (1ª saída -> 2ª entrada), ou null se ainda não apurável. */
   intervaloRealMin: number | null;
   /** minutos decorridos da pausa obrigatória em curso, ou null se não está nela. */
@@ -65,10 +63,15 @@ export interface ResultadoCalculo {
 }
 
 /**
- * Núcleo do cálculo de horas, seguindo a especificação:
- * - até 3 períodos por dia; o 1º/2º são a jornada normal, separados pelo intervalo
- *   obrigatório (30-60min, com 15min sempre pagos); o 3º é opcional, separado do 2º
- *   por uma pausa livre que não conta nem a favor nem contra.
+ * Núcleo do cálculo de horas:
+ * - jornada líquida de trabalho = 5h45 (345min); o dia = jornada líquida + intervalo
+ *   obrigatório real (30-60min) entre o 1º e o 2º período. O 3º período é opcional,
+ *   separado do 2º por uma pausa livre que não conta nem a favor nem contra.
+ * - previsto = entrada do 1º período + 345min + intervalo real (integral, sem desconto).
+ *   Só o que exceder o mínimo de 30min empurra o previsto pra frente.
+ * - tempo computado = tempo trabalhado + 30min fixos (o mínimo do intervalo, não o
+ *   intervalo real) — assim, bater exatamente no horário previsto sempre zera o saldo,
+ *   independente da duração real do intervalo (30, 45 ou 60min).
  * - a previsão de saída "congela" no momento em que cada período abre, usando só o
  *   tempo computado já fechado até ali — e só volta a mudar quando um novo período abrir.
  */
@@ -79,13 +82,14 @@ export function calcular(estado: EstadoDia): ResultadoCalculo {
   const s0 = toMin(periodos[0].s);
   const e1 = toMin(periodos[1].e);
   const intervaloRealMin = s0 !== null && e1 !== null ? ((e1 - s0 + 1440) % 1440) : null;
-  const creditoIntervaloMin = intervaloRealMin !== null ? Math.min(CREDITO_INTERVALO_MIN, intervaloRealMin) : 0;
 
   // computedClosedBefore(idx): tempo computado já fechado antes do período `idx` abrir.
+  // Usa o intervalo mínimo obrigatório (30min fixos, não o intervalo real) pra descontar
+  // do previsto: só o tempo de intervalo que excede o mínimo empurra o horário previsto.
   const computedClosedBefore = (idx: number) => {
     let total = 0;
     for (let j = 0; j < idx; j++) total += trabalho[j];
-    if (idx >= 1) total += creditoIntervaloMin;
+    if (idx >= 1) total += INTERVALO_MIN_MIN;
     return total;
   };
 
@@ -99,7 +103,10 @@ export function calcular(estado: EstadoDia): ResultadoCalculo {
     : 0;
 
   const tempoTrabalhadoMin = trabalho[0] + trabalho[1] + trabalho[2] + emCursoMin;
-  const tempoComputadoMin = tempoTrabalhadoMin + creditoIntervaloMin;
+  // Consistente com o previsto: soma o intervalo mínimo obrigatório (30min fixos), não o
+  // intervalo real — assim bater exatamente no horário previsto sempre zera o saldo.
+  const descontoIntervaloMin = intervaloRealMin !== null ? INTERVALO_MIN_MIN : 0;
+  const tempoComputadoMin = tempoTrabalhadoMin + descontoIntervaloMin;
 
   // Previsto: âncora no último período que teve uma entrada registrada.
   let previsto: string | null = null;
@@ -135,7 +142,6 @@ export function calcular(estado: EstadoDia): ResultadoCalculo {
     statusDia,
     tempoTrabalhadoMin,
     tempoComputadoMin,
-    creditoIntervaloMin,
     intervaloRealMin,
     intervaloEmCursoMin,
     previsto,

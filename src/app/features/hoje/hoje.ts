@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { PontoService } from '../../core/ponto.service';
 import { toHM, toMin } from '../../core/calculo/calculo';
 import { mask, norm } from '../../core/calculo/mask';
-import { INTERVALO_MAX_MIN } from '../../core/constants';
+import { INTERVALO_MIN_MIN } from '../../core/constants';
 import { dataLegivel } from '../../core/data-utils';
 import { StatusPeriodo } from '../../core/calculo/calculo';
 import { Origem, TipoRegistro } from '../../core/models';
@@ -57,7 +57,7 @@ export class Hoje {
         saida: p.s ?? '',
         status: CHIP[calc.statusPeriodos[i]],
         temLimite: i === 1 && calc.statusDia === 'intervalo' && s0 !== null,
-        limite: s0 !== null ? toHM(s0 + INTERVALO_MAX_MIN) : '00:00',
+        limite: s0 !== null ? toHM(s0 + INTERVALO_MIN_MIN) : '00:00',
         entradaHabilitada,
         saidaHabilitada,
       };
