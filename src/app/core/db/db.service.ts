@@ -71,4 +71,14 @@ export class DbService {
     const store = await this.store(STORE_DIAS, 'readonly');
     return this.wrap(store.get(data));
   }
+
+  async limparRegistros(): Promise<void> {
+    const store = await this.store(STORE_REGISTROS, 'readwrite');
+    await this.wrap(store.clear());
+  }
+
+  async limparDias(): Promise<void> {
+    const store = await this.store(STORE_DIAS, 'readwrite');
+    await this.wrap(store.clear());
+  }
 }

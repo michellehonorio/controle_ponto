@@ -10,6 +10,8 @@ export interface Registro {
   origem: Origem;
   editado: boolean;
   criadoEm: number;
+  /** epoch ms da última alteração — usado pra resolver conflito na sincronização com o Firebase. */
+  atualizadoEm: number;
 }
 
 export interface DiaResumo {
@@ -19,6 +21,8 @@ export interface DiaResumo {
   tempoTrabalhadoMin?: number;
   tempoComputadoMin?: number;
   saldoDiaMin?: number;
+  /** epoch ms da última alteração — usado pra resolver conflito na sincronização com o Firebase. */
+  atualizadoEm: number;
 }
 
 /** Um par entrada/saída dentro de um dia (1º, 2º ou 3º período). */

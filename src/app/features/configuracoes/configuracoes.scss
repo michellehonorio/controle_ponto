@@ -87,6 +87,12 @@
   }
 }
 
+.acoes-linha {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .status-linha {
   display: flex;
   align-items: center;

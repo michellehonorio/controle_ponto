@@ -1,18 +1,20 @@
 # Especificação Funcional — App de Controle de Ponto (PWA)
 
-Versão 1.3 — 09/09/2026 (corrige a fórmula do intervalo obrigatório: veja item 2 e 4.3)
+Versão 1.4 — 13/09/2026 (troca a sincronização em nuvem de OneDrive/Azure para Firebase; app já publicado)
 
 ## 0. Status atual do projeto
 
 - ✅ **Implementado e testado**: todas as regras de negócio (itens 1 a 8 abaixo), as 4 telas (Hoje, Histórico, Registro manual, Configurações), armazenamento local (offline) e os alertas dinâmicos de notificação. Já rodei testes automatizados da lógica de cálculo e um teste completo simulando um dia de trabalho de ponta a ponta, sem erros encontrados.
+- ✅ **Publicado**: o app já está no ar em [michellehonorio.github.io/controle_ponto](https://michellehonorio.github.io/controle_ponto/), instalável na tela inicial do celular.
 - 🔧 **Corrigido na v1.3**: a fórmula do intervalo obrigatório estava errada (usava um "crédito fixo de 15min" que não reflete a regra real). A regra correta, validada com exemplos concretos: os primeiros 30 minutos do intervalo (o mínimo obrigatório) são fixos e não empurram o previsto; só o que exceder 30 minutos empurra, minuto a minuto. Ver itens 2 e 4.3.
-- ⏳ **Pendente**: sincronização com o OneDrive (itens 19/20 da lista original — depende de você criar um cadastro gratuito de aplicativo no Azure); hospedar o app num link público pra instalar no celular (GitHub Pages, combinado); e ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
+- 🔄 **Trocado na v1.4**: a sincronização em nuvem passou a usar **Firebase** (login com conta Google + Firestore) em vez de OneDrive/Microsoft — o cadastro no Azure exigido pelo OneDrive era complicado demais; o Firebase só exige criar um projeto gratuito logando com a conta Google. Ver item 7. Passo a passo em `docs/firebase-setup.md`.
+- ⏳ **Pendente**: a usuária ainda precisa criar o projeto Firebase e me passar a configuração pra ativar a sincronização de verdade (por enquanto os dados ficam só no dispositivo); e ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
 
 ## 1. Visão geral
 
 Aplicativo web progressivo (PWA), acessado pelo navegador do celular e instalável na tela inicial, para registrar os horários de entrada e saída do trabalho, calcular automaticamente o saldo de horas do dia (positivo ou negativo) e alertar a usuária nos momentos certos, evitando que ela esqueça de bater o ponto ou perca o controle da jornada.
 
-Funciona offline (dados sempre salvos no celular primeiro) e sincroniza automaticamente com o OneDrive da usuária quando há conexão com a internet, permitindo acesso ao histórico em outros dispositivos e evitando perda de dados.
+Funciona offline (dados sempre salvos no celular primeiro) e sincroniza automaticamente com a conta Google da usuária (via Firebase) quando há conexão com a internet, permitindo acesso ao histórico em outros dispositivos e evitando perda de dados.
 
 ## 2. Conceitos e limites da jornada
 
@@ -93,8 +95,8 @@ As regras definem um intervalo mínimo de 30 minutos, mas não impedem que a usu
 ## 7. Armazenamento e sincronização
 
 - **Local (offline-first)**: todos os registros ficam salvos direto no celular (banco de dados local do navegador), então o app funciona normalmente mesmo sem internet.
-- **Nuvem (OneDrive)**: sempre que houver conexão, os dados são sincronizados automaticamente com um arquivo dentro da conta OneDrive da usuária (login único via conta Microsoft). Isso garante backup do histórico e acesso pelos outros dispositivos em que ela fizer login.
-- Como o uso é de uma única pessoa, a sincronização é simples: o registro mais recentemente alterado prevalece em caso de conflito entre o que está no celular e o que está no OneDrive.
+- **Nuvem (Firebase)**: sempre que houver conexão, os dados são sincronizados automaticamente com o Firestore da usuária (login único via conta Google), isolados por conta. Isso garante backup do histórico e acesso pelos outros dispositivos em que ela fizer login.
+- Como o uso é de uma única pessoa, a sincronização é simples: o registro mais recentemente alterado prevalece em caso de conflito entre o que está no celular e o que está no Firestore — a comparação é feita registro a registro (não o histórico inteiro de uma vez).
 
 ## 8. Notificações
 
@@ -107,7 +109,7 @@ As regras definem um intervalo mínimo de 30 minutos, mas não impedem que a usu
 1. **Hoje**: status atual da jornada (trabalhando / em intervalo / encerrada), próximo horário relevante, botão grande para registrar o próximo ponto esperado, e botão "Encerrar jornada".
 2. **Histórico**: lista de dias com todos os horários registrados, saldo do dia e saldo acumulado; permite editar ou excluir qualquer registro.
 3. **Registro manual**: tela para lançar ou corrigir um horário informado manualmente.
-4. **Configurações**: conexão com a conta Microsoft/OneDrive, status da sincronização e backup.
+4. **Configurações**: conexão com a conta Google/Firebase, status da sincronização e backup.
 
 ## 10. Dados armazenados por registro
 

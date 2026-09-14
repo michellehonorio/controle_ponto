@@ -116,9 +116,10 @@ export class PontoService {
       if (existente?.id !== undefined) await this.excluirRegistro(existente.id, data);
       return;
     }
+    const agora = Date.now();
     const registro: Registro = existente
-      ? { ...existente, horario, editado: origem === 'manual' ? true : existente.editado }
-      : { data, sequencia, tipo, horario, origem, editado: false, criadoEm: Date.now() };
+      ? { ...existente, horario, editado: origem === 'manual' ? true : existente.editado, atualizadoEm: agora }
+      : { data, sequencia, tipo, horario, origem, editado: false, criadoEm: agora, atualizadoEm: agora };
     await this.gravarRegistro(registro);
     if (data === this.hojeKey()) await this.recalcularDia(data);
   }
@@ -146,6 +147,7 @@ export class PontoService {
       tempoTrabalhadoMin: calc.tempoTrabalhadoMin,
       tempoComputadoMin: calc.tempoComputadoMin,
       saldoDiaMin: saldoAoEncerrar(calc.tempoComputadoMin),
+      atualizadoEm: Date.now(),
     });
   }
 
@@ -187,6 +189,7 @@ export class PontoService {
       tempoTrabalhadoMin: calc.tempoTrabalhadoMin,
       tempoComputadoMin: calc.tempoComputadoMin,
       saldoDiaMin: saldoMin,
+      atualizadoEm: Date.now(),
     });
     this.aviso.set('');
   }
@@ -198,7 +201,31 @@ export class PontoService {
       if (r.id !== undefined) await this.db.excluirRegistro(r.id);
     }
     this.registros.update(lista => lista.filter(r => r.data !== hoje));
-    await this.gravarDia({ data: hoje, encerrada: false });
+    await this.gravarDia({ data: hoje, encerrada: false, atualizadoEm: Date.now() });
     this.aviso.set('');
+  }
+
+  /** Retorna todos os registros/dias em memória, sem os ids locais (não fazem sentido entre dispositivos). Usado pela sincronização com o Firebase. */
+  exportarTudo(): { registros: Omit<Registro, 'id'>[]; dias: DiaResumo[] } {
+    return {
+      registros: this.registros().map(({ id, ...resto }) => resto),
+      dias: this.dias(),
+    };
+  }
+
+  /** Substitui todo o conteúdo local (IndexedDB + memória) pelo resultado de um merge de sincronização. */
+  async importarTudo(dados: { registros: Omit<Registro, 'id'>[]; dias: DiaResumo[] }) {
+    await this.db.limparRegistros();
+    await this.db.limparDias();
+    const registrosSalvos: Registro[] = [];
+    for (const r of dados.registros) {
+      const id = await this.db.salvarRegistro(r as Registro);
+      registrosSalvos.push({ ...(r as Registro), id });
+    }
+    for (const d of dados.dias) {
+      await this.db.salvarDia(d);
+    }
+    this.registros.set(registrosSalvos);
+    this.dias.set(dados.dias);
   }
 }

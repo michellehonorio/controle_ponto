@@ -20,16 +20,35 @@
     </section>
 
     <section class="cartao">
-      <h2 class="cartao__titulo">Conta Microsoft / OneDrive</h2>
-      <p class="cartao__texto">
-        A sincronização automática com o OneDrive ainda não está disponível — depende de um
-        cadastro de aplicativo no Azure. Por enquanto, todos os registros ficam salvos
-        apenas neste dispositivo.
-      </p>
-      <button type="button" class="botao-secundario" disabled>Conectar com Microsoft (em breve)</button>
+      <h2 class="cartao__titulo">Conta Google / Firebase</h2>
+
+      @if (!firebaseConfigurado) {
+        <p class="cartao__texto">
+          A sincronização automática ainda não está disponível — depende de um projeto
+          Firebase configurado. Por enquanto, todos os registros ficam salvos apenas
+          neste dispositivo.
+        </p>
+        <button type="button" class="botao-secundario" disabled>Conectar com Google (em breve)</button>
+      } @else if (!sincronizacao.conectado()) {
+        <p class="cartao__texto">
+          Conecte sua conta Google pra fazer backup automático dos registros na nuvem
+          e acessar o histórico em outros dispositivos.
+        </p>
+        <button type="button" class="botao-secundario" (click)="conectarNuvem()">Conectar com Google</button>
+      } @else {
+        <p class="cartao__texto">Conectado como {{ sincronizacao.contaEmail() }}</p>
+        <div class="acoes-linha">
+          <button type="button" class="botao-secundario" (click)="sincronizarAgora()" [disabled]="sincronizacao.sincronizando()">
+            Sincronizar agora
+          </button>
+          <button type="button" class="botao-secundario" (click)="desconectarNuvem()">Desconectar</button>
+        </div>
+      }
+
       <div class="status-linha">
-        <span class="bolinha bolinha--pendente"></span>
-        Sincronização: pendente
+        <span class="bolinha" [class.bolinha--ok]="sincronizacao.conectado() && !sincronizacao.erroSincronizacao()"
+              [class.bolinha--pendente]="!sincronizacao.conectado() || !!sincronizacao.erroSincronizacao()"></span>
+        Sincronização: {{ rotuloSincronizacao() }}
       </div>
     </section>
 
