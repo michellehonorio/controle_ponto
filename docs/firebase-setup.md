@@ -7,9 +7,10 @@ seus registros na nuvem, isolados por conta (cada pessoa só vê os próprios da
 
 1. Acesse [console.firebase.google.com](https://console.firebase.google.com), faça login com sua conta Google e clique em **"Adicionar projeto"**. Siga o assistente (pode desativar o Google Analytics, não é necessário).
 
-2. Dentro do projeto criado: menu **Build** → **Authentication** → **Get started** → aba **Sign-in method** → clique em **Google** → ative → salve.
+2. Dentro do projeto criado, no menu lateral: clique em **"Segurança"** pra expandir → **Authentication** → **"Vamos começar"** → na aba **"Método de login"**, clique em **Google** na lista de provedores → ative → salve.
+   (o console do Firebase muda de layout de vez em quando — se não achar "Segurança", use a busca no topo e digite "Authentication".)
 
-3. Menu **Build** → **Firestore Database** → **Create database** → escolha o modo **produção** → escolha uma localização (`southamerica-east1` se aparecer, ou a sugerida) → **Enable**.
+3. No menu lateral: clique em **"Bancos de dados e ar..."** (Bancos de dados e armazenamento) → **Cloud Firestore** → **"Create database"** → na etapa "Selecionar a edição", deixe **Standard** (padrão, gratuita) → **Avançar** → escolha uma localização (`southamerica-east1` se aparecer, ou a sugerida) → **Avançar** → deixe **"Iniciar no modo de produção"** selecionado → **Criar**.
 
 4. Ainda em **Firestore Database**, vá na aba **Rules** e substitua o conteúdo por:
 
@@ -26,7 +27,7 @@ seus registros na nuvem, isolados por conta (cada pessoa só vê os próprios da
 
    Clique em **Publish**. Isso garante que cada conta só acessa os próprios dados.
 
-5. Clique no ícone de engrenagem (⚙️) ao lado de "Project Overview" → **Configurações do projeto** → aba **Geral** → role até **Seus apps** → clique no ícone **</>** (Web) → dê um nome (ex: "Controle de Ponto") → **Registrar app** (não precisa marcar Firebase Hosting).
+5. Clique em **"Configurações"** (ícone de engrenagem, no topo do menu lateral) → aba **Geral** → role até **Seus apps** → clique no ícone **</>** (Web) → dê um nome (ex: "Controle de Ponto") → **Registrar app** (não precisa marcar Firebase Hosting) → **Continuar no console** (não precisa copiar/colar o código de exemplo mostrado ali).
 
 6. Copie o objeto `firebaseConfig` que aparece — algo como:
 
@@ -41,7 +42,7 @@ seus registros na nuvem, isolados por conta (cada pessoa só vê os próprios da
    };
    ```
 
-7. Ainda em Authentication, vá na aba **Settings** → **Authorized domains** → confirme que `localhost` já está na lista e clique em **Add domain** pra adicionar `michellehonorio.github.io`.
+7. Ainda em Authentication, vá na aba **Configurações** → **Domínios autorizados** → confirme que `localhost` já está na lista e clique em **Adicionar domínio** pra incluir `michellehonorio.github.io`.
 
 ## Onde colocar a configuração
 

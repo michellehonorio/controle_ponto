@@ -1,14 +1,15 @@
 # Especificação Funcional — App de Controle de Ponto (PWA)
 
-Versão 1.4 — 13/09/2026 (troca a sincronização em nuvem de OneDrive/Azure para Firebase; app já publicado)
+Versão 1.5 — 15/09/2026 (projeto Firebase configurado e conectado; sincronização em nuvem ativa)
 
 ## 0. Status atual do projeto
 
 - ✅ **Implementado e testado**: todas as regras de negócio (itens 1 a 8 abaixo), as 4 telas (Hoje, Histórico, Registro manual, Configurações), armazenamento local (offline) e os alertas dinâmicos de notificação. Já rodei testes automatizados da lógica de cálculo e um teste completo simulando um dia de trabalho de ponta a ponta, sem erros encontrados.
 - ✅ **Publicado**: o app já está no ar em [michellehonorio.github.io/controle_ponto](https://michellehonorio.github.io/controle_ponto/), instalável na tela inicial do celular.
 - 🔧 **Corrigido na v1.3**: a fórmula do intervalo obrigatório estava errada (usava um "crédito fixo de 15min" que não reflete a regra real). A regra correta, validada com exemplos concretos: os primeiros 30 minutos do intervalo (o mínimo obrigatório) são fixos e não empurram o previsto; só o que exceder 30 minutos empurra, minuto a minuto. Ver itens 2 e 4.3.
-- 🔄 **Trocado na v1.4**: a sincronização em nuvem passou a usar **Firebase** (login com conta Google + Firestore) em vez de OneDrive/Microsoft — o cadastro no Azure exigido pelo OneDrive era complicado demais; o Firebase só exige criar um projeto gratuito logando com a conta Google. Ver item 7. Passo a passo em `docs/firebase-setup.md`.
-- ⏳ **Pendente**: a usuária ainda precisa criar o projeto Firebase e me passar a configuração pra ativar a sincronização de verdade (por enquanto os dados ficam só no dispositivo); e ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
+- 🔄 **Trocado na v1.4**: a sincronização em nuvem passou a usar **Firebase** (login com conta Google + Firestore) em vez de OneDrive/Microsoft — o cadastro no Azure exigido pelo OneDrive era complicado demais; o Firebase só exige criar um projeto gratuito logando com a conta Google. Ver item 7.
+- ✅ **Configurado na v1.5**: projeto Firebase criado, login com Google ativado, regras de segurança do Firestore publicadas, domínios autorizados (`localhost` e `michellehonorio.github.io`) configurados, e a config do projeto já preenchida no código. O botão "Conectar com Google" está funcional e o redirecionamento pro login do Google foi testado com sucesso.
+- ⏳ **Pendente**: a usuária ainda precisa completar o primeiro login de verdade (conta Google) pra confirmar que os registros aparecem no Firestore; e ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
 
 ## 1. Visão geral
 

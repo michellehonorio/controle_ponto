@@ -6,13 +6,11 @@ export const TOLERANCIA_MIN = 10; // tolerância na saída final, pra mais ou pr
 export const ALERTA_INTERVALO_ANTECEDENCIA_MIN = 5; // avisa 5min antes de completar o intervalo mínimo
 export const ALERTA_META_ANTECEDENCIA_MIN = 10; // avisa 10min antes de atingir a meta
 
-// TODO: preencher com o objeto de config do projeto Firebase (console.firebase.google.com >
-// Configurações do projeto > Geral > Seus apps > Web). Ver docs/firebase-setup.md.
 export const FIREBASE_CONFIG = {
-  apiKey: '',
-  authDomain: '',
-  projectId: '',
-  storageBucket: '',
-  messagingSenderId: '',
-  appId: '',
+  apiKey: 'AIzaSyBgFSUXs0mTt4ZrndlOWp8nybEybVVLt1E',
+  authDomain: 'controle-de-ponto-741f0.firebaseapp.com',
+  projectId: 'controle-de-ponto-741f0',
+  storageBucket: 'controle-de-ponto-741f0.firebasestorage.app',
+  messagingSenderId: '33918630118',
+  appId: '1:33918630118:web:8a10d4dbbc74086e066327',
 };
