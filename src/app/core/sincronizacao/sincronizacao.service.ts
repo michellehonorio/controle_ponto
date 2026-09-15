@@ -1,8 +1,8 @@
 import { Injectable, effect, inject, signal } from '@angular/core';
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import {
-  Auth, GoogleAuthProvider, User, getAuth, getRedirectResult,
-  onAuthStateChanged, signInWithRedirect, signOut,
+  Auth, GoogleAuthProvider, User, getAuth,
+  onAuthStateChanged, signInWithPopup, signOut,
 } from 'firebase/auth';
 import {
   Firestore, collection, doc, getDocs, getFirestore, writeBatch,
@@ -68,12 +68,6 @@ export class SincronizacaoService {
   async inicializar(): Promise<void> {
     if (!FIREBASE_CONFIGURADO) return; // projeto Firebase ainda não configurado (ver docs/firebase-setup.md)
     const auth = this.obterAuth();
-    try {
-      await getRedirectResult(auth);
-    } catch (e) {
-      this.erroSincronizacao.set('Falha ao concluir o login com o Google.');
-      console.error(e);
-    }
     onAuthStateChanged(auth, (usuario) => {
       if (usuario) {
         this.marcarConectado(usuario);
@@ -92,7 +86,15 @@ export class SincronizacaoService {
       this.erroSincronizacao.set('Projeto Firebase ainda não configurado (ver docs/firebase-setup.md).');
       return;
     }
-    await signInWithRedirect(this.obterAuth(), new GoogleAuthProvider());
+    this.erroSincronizacao.set(null);
+    try {
+      // popup em vez de redirect: evita o bug conhecido de navegadores que bloqueiam o
+      // armazenamento entre sites necessário pro Firebase recuperar o login após um redirect.
+      await signInWithPopup(this.obterAuth(), new GoogleAuthProvider());
+    } catch (e) {
+      this.erroSincronizacao.set('Não foi possível conectar com o Google.');
+      console.error(e);
+    }
   }
 
   async desconectar(): Promise<void> {
