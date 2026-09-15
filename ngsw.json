@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1789484589410,
+  "timestamp": 1789505963679,
   "index": "/controle_ponto/index.html",
   "assetGroups": [
     {
@@ -11,14 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
-        "/controle_ponto/chunk-BCpkY6WN.js",
-        "/controle_ponto/chunk-BR9_upy4.js",
-        "/controle_ponto/chunk-CX6RxLTq.js",
-        "/controle_ponto/chunk-DUADS688.js",
-        "/controle_ponto/chunk-lBrHLoq3.js",
+        "/controle_ponto/chunk-BK700lNt.js",
+        "/controle_ponto/chunk-CYkIYs6d.js",
+        "/controle_ponto/chunk-PToNWAkm.js",
+        "/controle_ponto/chunk-egX2I8LZ.js",
         "/controle_ponto/favicon.ico",
         "/controle_ponto/index.html",
-        "/controle_ponto/main-TCSIY3YH.js",
+        "/controle_ponto/main-JK7ZLZXO.js",
         "/controle_ponto/manifest.webmanifest",
         "/controle_ponto/styles-KRNMPB3R.css"
       ],
@@ -46,11 +45,10 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/controle_ponto/chunk-BCpkY6WN.js": "0804c658bec5462ef7288013af35e8894a2333e5",
-    "/controle_ponto/chunk-BR9_upy4.js": "303165535f14e09665df2b06ee45761095827d49",
-    "/controle_ponto/chunk-CX6RxLTq.js": "aa6f409d39830ffabb42a197cc9dff337b5e57c3",
-    "/controle_ponto/chunk-DUADS688.js": "673f54474e316138122d7751bbe15f5d8d88d135",
-    "/controle_ponto/chunk-lBrHLoq3.js": "f923d219ff4b6de6d1faa9cd78ee91bf791af773",
+    "/controle_ponto/chunk-BK700lNt.js": "ee2532e840d7f5e4fbf58c01e24e8ffe80b893d5",
+    "/controle_ponto/chunk-CYkIYs6d.js": "1b5c89ab94b853ac7be2b72e29972a27f8692e72",
+    "/controle_ponto/chunk-PToNWAkm.js": "283cc25ec920edbfa4463cf3d4c410f33657c007",
+    "/controle_ponto/chunk-egX2I8LZ.js": "0543f7ef60ebe1f4e7363e9e865928a440a2e695",
     "/controle_ponto/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/controle_ponto/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
     "/controle_ponto/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
@@ -60,8 +58,8 @@
     "/controle_ponto/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/controle_ponto/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/controle_ponto/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/controle_ponto/index.html": "cd5e296f8b0a017bf8d5cfe7033b8e086bd738f8",
-    "/controle_ponto/main-TCSIY3YH.js": "16288d4a7ddcca17ba2e2c6247306d4d07b990f3",
+    "/controle_ponto/index.html": "69c4306d050dd11000d229dccb24530b84fbf723",
+    "/controle_ponto/main-JK7ZLZXO.js": "2b3a5b59d1d7ec1494797893e09995fd6a5bb1ba",
     "/controle_ponto/manifest.webmanifest": "6edb39210adcf149fbf6586574e0a228c490131e",
     "/controle_ponto/styles-KRNMPB3R.css": "3a7334b5e96766b23860e6a7ddd8290aa69f039a"
   },
