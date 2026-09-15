@@ -1,15 +1,16 @@
 # Especificação Funcional — App de Controle de Ponto (PWA)
 
-Versão 1.5 — 15/09/2026 (projeto Firebase configurado e conectado; sincronização em nuvem ativa)
+Versão 1.6 — 15/09/2026 (registro manual de qualquer data unificado na tela "Hoje")
 
 ## 0. Status atual do projeto
 
-- ✅ **Implementado e testado**: todas as regras de negócio (itens 1 a 8 abaixo), as 4 telas (Hoje, Histórico, Registro manual, Configurações), armazenamento local (offline) e os alertas dinâmicos de notificação. Já rodei testes automatizados da lógica de cálculo e um teste completo simulando um dia de trabalho de ponta a ponta, sem erros encontrados.
+- ✅ **Implementado e testado**: todas as regras de negócio (itens 1 a 8 abaixo), as 3 telas (Hoje, Histórico, Configurações), armazenamento local (offline) e os alertas dinâmicos de notificação. Já rodei testes automatizados da lógica de cálculo e um teste completo simulando um dia de trabalho de ponta a ponta, sem erros encontrados.
 - ✅ **Publicado**: o app já está no ar em [michellehonorio.github.io/controle_ponto](https://michellehonorio.github.io/controle_ponto/), instalável na tela inicial do celular.
 - 🔧 **Corrigido na v1.3**: a fórmula do intervalo obrigatório estava errada (usava um "crédito fixo de 15min" que não reflete a regra real). A regra correta, validada com exemplos concretos: os primeiros 30 minutos do intervalo (o mínimo obrigatório) são fixos e não empurram o previsto; só o que exceder 30 minutos empurra, minuto a minuto. Ver itens 2 e 4.3.
 - 🔄 **Trocado na v1.4**: a sincronização em nuvem passou a usar **Firebase** (login com conta Google + Firestore) em vez de OneDrive/Microsoft — o cadastro no Azure exigido pelo OneDrive era complicado demais; o Firebase só exige criar um projeto gratuito logando com a conta Google. Ver item 7.
-- ✅ **Configurado na v1.5**: projeto Firebase criado, login com Google ativado, regras de segurança do Firestore publicadas, domínios autorizados (`localhost` e `michellehonorio.github.io`) configurados, e a config do projeto já preenchida no código. O botão "Conectar com Google" está funcional e o redirecionamento pro login do Google foi testado com sucesso.
-- ⏳ **Pendente**: a usuária ainda precisa completar o primeiro login de verdade (conta Google) pra confirmar que os registros aparecem no Firestore; e ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
+- ✅ **Configurado e testado de ponta a ponta na v1.5**: projeto Firebase criado, login com Google funcionando (via pop-up — o fluxo de redirecionamento de página inteira não completava em alguns navegadores, então trocamos), regras de segurança do Firestore publicadas, e confirmado com dados reais aparecendo no Firestore após um login de verdade.
+- 🔄 **Unificado na v1.6**: a tela separada "Registro manual" foi removida — agora dá pra lançar ou corrigir o horário de qualquer data direto na tela "Hoje", através de um campo de data no topo. Ver item 9.
+- ⏳ **Pendente**: ajustar o visual/layout conforme o design que você está criando (aguardando você conseguir me enviar o print ou export dele).
 
 ## 1. Visão geral
 
@@ -85,9 +86,9 @@ Ao encerrar, o sistema compara o **tempo computado final** com a meta de 6h15 e 
 
 ## 5. Registro dos horários
 
-- **Botão "Agora"**: forma principal de uso — um toque registra o horário atual na hora, para o próximo ponto esperado do dia.
-- **Registro/edição manual**: caso a usuária esqueça de bater o ponto no momento certo, ela pode informar o horário manualmente depois (em vez de usar "Agora").
-- É possível editar ou excluir qualquer registro já lançado, inclusive de dias anteriores. Ao editar um registro de um dia passado, o sistema recalcula automaticamente o saldo daquele dia e atualiza o saldo acumulado total.
+- **Botão "Agora"**: forma principal de uso — um toque registra o horário atual na hora, para o próximo ponto esperado do dia. Só disponível quando a data selecionada na tela "Hoje" é o dia de hoje.
+- **Registro/edição manual de qualquer data**: na própria tela "Hoje", um campo de data permite selecionar qualquer dia passado — os horários já gravados aparecem preenchidos nos mesmos cartões de período, prontos pra editar (ou digitar do zero, se a usuária esqueceu de registrar aquele dia inteiro). A gravação só acontece ao confirmar no botão "Salvar alterações".
+- É possível editar ou excluir qualquer registro já lançado, inclusive de dias anteriores (tanto pela tela "Hoje" quanto pelo Histórico). Ao editar os horários de um dia passado, o sistema recalcula automaticamente o saldo daquele dia e atualiza o saldo acumulado total.
 
 ## 6. Observação sobre intervalo abaixo do mínimo
 
@@ -107,10 +108,9 @@ As regras definem um intervalo mínimo de 30 minutos, mas não impedem que a usu
 
 ## 9. Telas principais
 
-1. **Hoje**: status atual da jornada (trabalhando / em intervalo / encerrada), próximo horário relevante, botão grande para registrar o próximo ponto esperado, e botão "Encerrar jornada".
+1. **Hoje**: status atual da jornada (trabalhando / em intervalo / encerrada), campo de data (seletor de calendário) pra escolher o dia atual ou qualquer dia passado, os cartões de período com os horários, e o botão de ação principal. Quando a data selecionada é hoje, esse botão registra o próximo ponto e encerra a jornada como sempre ("Encerrar jornada"); quando é uma data passada, os campos carregam o que já estiver gravado (ou ficam vazios, se não houver nada), a edição fica só na tela até confirmar, e o botão vira "Salvar alterações" — habilitado apenas quando algo foi alterado, e sempre fecha aquele dia (calcula o saldo final) ao salvar.
 2. **Histórico**: lista de dias com todos os horários registrados, saldo do dia e saldo acumulado; permite editar ou excluir qualquer registro.
-3. **Registro manual**: tela para lançar ou corrigir um horário informado manualmente.
-4. **Configurações**: conexão com a conta Google/Firebase, status da sincronização e backup.
+3. **Configurações**: conexão com a conta Google/Firebase, status da sincronização e backup.
 
 ## 10. Dados armazenados por registro
 

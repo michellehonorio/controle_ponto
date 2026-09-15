@@ -55,6 +55,22 @@
   padding: 16px 18px 18px;
 }
 
+.cartao--data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.input-data {
+  background: var(--cor-pilula);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 12px;
+  font: 600 16px/1 Nunito, sans-serif;
+  color: #111;
+}
+
 .cartao__cabecalho {
   display: flex;
   align-items: center;

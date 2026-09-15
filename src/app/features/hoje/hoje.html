@@ -2,11 +2,16 @@
 
   <header class="topo">
     <div class="topo__titulo">Controle de Ponto</div>
-    <div class="topo__data">{{ dataHoje() }} · agora {{ horaAgora() }}</div>
+    <div class="topo__data">{{ dataLabel() }}{{ ehHoje() ? ' · agora ' + horaAgora() : '' }}</div>
     <span class="topo__status">{{ statusDiaLabel() }}</span>
   </header>
 
   <div class="conteudo">
+
+    <div class="cartao cartao--data">
+      <span class="campo__rotulo">Data</span>
+      <input type="date" class="input-data" [max]="maxData()" [value]="dataSelecionada()" (change)="selecionarData($event)" />
+    </div>
 
     @for (p of periodos(); track p.titulo; let i = $index) {
       <div class="cartao">
@@ -18,7 +23,7 @@
           <div class="campo">
             <span class="campo__rotulo">Entrada</span>
             <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
-                   [value]="p.entrada" [disabled]="ponto.encerradaHoje()"
+                   [value]="p.entrada" [disabled]="ehHoje() && ponto.encerradaHoje()"
                    (input)="onInput($event)" (blur)="onBlur(i + 1, 'entrada', $event)" />
             <button type="button" class="botao-relogio" title="Marcar agora" [disabled]="!p.entradaHabilitada"
                     (click)="marcarAgora(i + 1, 'entrada')">
@@ -28,7 +33,7 @@
           <div class="campo">
             <span class="campo__rotulo">Saída</span>
             <input type="text" inputmode="numeric" maxlength="5" placeholder="00:00"
-                   [value]="p.saida" [disabled]="ponto.encerradaHoje()"
+                   [value]="p.saida" [disabled]="ehHoje() && ponto.encerradaHoje()"
                    (input)="onInput($event)" (blur)="onBlur(i + 1, 'saida', $event)" />
             <button type="button" class="botao-relogio" title="Marcar agora" [disabled]="!p.saidaHabilitada"
                     (click)="marcarAgora(i + 1, 'saida')">
@@ -54,11 +59,13 @@
     </div>
 
     <div class="acoes">
-      <button type="button" class="botao-encerrar" [disabled]="ponto.encerradaHoje()" (click)="encerrar()">{{ rotuloEncerrar() }}</button>
-      @if (ponto.encerradaHoje()) {
+      <button type="button" class="botao-encerrar" [disabled]="botaoDesabilitado()" (click)="encerrar()">{{ rotuloBotao() }}</button>
+      @if (encerradaSelecionada()) {
         <div class="mensagem-encerrada">
-          Jornada encerrada às {{ ponto.diaHoje()?.fimReal }} · {{ total() }} trabalhadas<br>
-          <button type="button" class="botao-nova-jornada" (click)="reiniciar()">Nova jornada</button>
+          Jornada encerrada às {{ fimRealSelecionado() }} · {{ total() }} trabalhadas<br>
+          @if (ehHoje()) {
+            <button type="button" class="botao-nova-jornada" (click)="reiniciar()">Nova jornada</button>
+          }
         </div>
       }
       @if (ponto.aviso()) {

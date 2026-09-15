@@ -194,6 +194,58 @@ export class PontoService {
     this.aviso.set('');
   }
 
+  diaPorData(data: string): DiaResumo | undefined {
+    return this.dias().find(d => d.data === data);
+  }
+
+  periodosPorData(data: string): Periodo[] {
+    return paraPeriodos(this.registros().filter(r => r.data === data));
+  }
+
+  /**
+   * Salva os períodos editados de um dia que não é hoje (data passada): sincroniza os
+   * 6 campos via `marcar`, recalcula o dia inteiro usando a saída do último período
+   * preenchido como horário de fechamento (não há "agora" pra um dia passado), e grava
+   * já como encerrado — um dia passado não pode ficar "em andamento". Mesma tolerância
+   * de saldo negativo de `encerrarJornada`. Retorna `false` se a usuária cancelar a
+   * confirmação de saldo negativo (nesse caso nada é desfeito: os campos já editados
+   * ficam salvos, só o fechamento do dia não é gravado).
+   */
+  async salvarDiaEditado(
+    data: string,
+    periodos: Periodo[],
+    confirmarSaldoNegativo: (saldoMin: number) => boolean | Promise<boolean>,
+  ): Promise<boolean> {
+    for (let seq = 1; seq <= 3; seq++) {
+      const p = periodos[seq - 1];
+      await this.marcar(data, seq as 1 | 2 | 3, 'entrada', p.e ?? '', 'manual');
+      await this.marcar(data, seq as 1 | 2 | 3, 'saida', p.s ?? '', 'manual');
+    }
+
+    const periodosFinais = this.periodosPorData(data);
+    const ultimoPreenchido = [2, 1, 0].map(i => periodosFinais[i]).find(p => p.s);
+    const fimReal = ultimoPreenchido?.s ?? this.diaPorData(data)?.fimReal ?? '00:00';
+
+    const calc = calcular({ periodos: periodosFinais, encerrada: true, fimReal, agoraMin: 0 });
+    const saldoMin = saldoAoEncerrar(calc.tempoComputadoMin);
+
+    if (saldoMin < 0) {
+      const prosseguir = await confirmarSaldoNegativo(saldoMin);
+      if (!prosseguir) return false;
+    }
+
+    await this.gravarDia({
+      data,
+      encerrada: true,
+      fimReal,
+      tempoTrabalhadoMin: calc.tempoTrabalhadoMin,
+      tempoComputadoMin: calc.tempoComputadoMin,
+      saldoDiaMin: saldoMin,
+      atualizadoEm: Date.now(),
+    });
+    return true;
+  }
+
   /** Apaga os registros de hoje e o resumo do dia, permitindo recomeçar do zero. */
   async reiniciarDiaDeHoje() {
     const hoje = this.hojeKey();
